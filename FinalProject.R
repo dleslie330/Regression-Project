@@ -151,8 +151,8 @@ x5 <- c(file[1:35,6],file[37:nrow(file),6])
 
 y <- c( file[1:35,8],file[37:nrow(file),8])
 
- n <- length(y)
- const <- rep(1,n)
+n <- length(y)
+const <- rep(1,n)
 X <- cbind(const,x2,x3,x4,x5)
 p <- dim(X)[2]
 k <- p-1
@@ -221,9 +221,13 @@ df5 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), M
  
 print(df5)
 
-df6 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+df6 <- data.frame(Parameter=c("Intercept","house Age", "Distance to nearest MRT station", "Number of convenience stores", "Latitude"), Estimate=BetaHat, s.e.=sebeta, Tvalue = tval, pvalue = pvalT)
+ 
+print(df6)
 
-plot(df6,pch = 20, cex=1.5, col='steelblue')
+df7 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+
+plot(df7,pch = 20, cex=1.5, col='steelblue')
 
 
 #remove 
@@ -283,13 +287,17 @@ e_stu <- e/(s*sqrt(1-hii))
 e_press <- e/(1-hii)
 
 
-df7 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), MS=round(c(MSR, MSE, 0),3), FO=round(c(F0, 0, 0),3), pvalue=c(PvalF, 0, 0))
+df8 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), MS=round(c(MSR, MSE, 0),3), FO=round(c(F0, 0, 0),3), pvalue=c(PvalF, 0, 0))
  
-print(df5)
+print(df8)
 
-df8 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+df9 <- data.frame(Parameter=c("Intercept","house Age", "Distance to nearest MRT station", "Number of convenience stores", "Latitude"), Estimate=BetaHat, s.e.=sebeta, Tvalue = tval, pvalue = pvalT)
+ 
+print(df9)
 
-plot(df8,pch = 20, cex=1.5, col='steelblue')
+df10 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+
+plot(df10,pch = 20, cex=1.5, col='steelblue')
 
 
 # remove both
@@ -347,13 +355,17 @@ e_stu <- e/(s*sqrt(1-hii))
 e_press <- e/(1-hii)
 
 
-df9 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), MS=round(c(MSR, MSE, 0),3), FO=round(c(F0, 0, 0),3), pvalue=c(PvalF, 0, 0))
+df11 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), MS=round(c(MSR, MSE, 0),3), FO=round(c(F0, 0, 0),3), pvalue=c(PvalF, 0, 0))
  
-print(df9)
+print(df11)
 
-df10 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+df12 <- data.frame(Parameter=c("Intercept","house Age", "Distance to nearest MRT station", "Number of convenience stores", "Latitude"), Estimate=BetaHat, s.e.=sebeta, Tvalue = tval, pvalue = pvalT)
+ 
+print(df12)
 
-plot(df10,pch = 20, cex=1.5, col='steelblue')
+df13 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+
+plot(df13,pch = 20, cex=1.5, col='steelblue')
 
 
 library(MASS)
@@ -399,10 +411,18 @@ e_press <- e/(1-hii)
 # 7. plot the residual
 df4 <- data.frame(y_ihat=yhatlambda, Studentized_residuals = e_stu)
 
-plot(df4,pch = 20, cex=1.5, col='steelblue')
+df14 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), MS=round(c(MSR, MSE, 0),3), FO=round(c(F0, 0, 0),3), pvalue=c(PvalF, 0, 0))
+ 
+print(df14)
 
+df15 <- data.frame(Parameter=c("Intercept","house Age", "Distance to nearest MRT station", "Number of convenience stores", "Latitude"), Estimate=BetaHat, s.e.=sebeta, Tvalue = tval, pvalue = pvalT)
+ 
+print(df15)
 
-#doesn't work
+df16 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
+
+plot(df16,pch = 20, cex=1.5, col='steelblue')
+
 
 
 
