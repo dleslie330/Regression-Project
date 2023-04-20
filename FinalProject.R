@@ -1,14 +1,14 @@
 file <- read.csv("/Users/BenFavorite/Documents/RegressionDataSet/Real Estate.txt", header = TRUE, sep = ",")
 file <- file[!apply(is.na(file) | file == "", 1, all),]
  
- 
-x1 <- file[1:nrow(file),2]
-x2 <- file[1:nrow(file),3]
-x3 <- file[1:nrow(file),4]
-x4 <- file[1:nrow(file),5]
-x5 <- file[1:nrow(file),6]
-x6 <- file[1:nrow(file),7]
- 
+	 
+	x1 <- file[1:nrow(file),2]
+	x2 <- file[1:nrow(file),3]
+	x3 <- file[1:nrow(file),4]
+	x4 <- file[1:nrow(file),5]
+	x5 <- file[1:nrow(file),6]
+	x6 <- file[1:nrow(file),7]
+	 
 y <- file[1:nrow(file),8]
  
 
@@ -57,12 +57,12 @@ df1 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), M
  
 print(df1)
 
-#remove insignificant regressor
+#remove insignificant regressor and dates
 file <- read.csv("/Users/BenFavorite/Documents/RegressionDataSet/Real Estate.txt", header = TRUE, sep = ",")
 file <- file[!apply(is.na(file) | file == "", 1, all),]
 
 
-X <- cbind(const,x1,x2,x3,x4,x5)
+X <- cbind(const,x2,x3,x4,x5)
 p <- dim(X)[2]
 k <- p-1
 XpX <- t(X)%*%X
@@ -105,7 +105,7 @@ df1 <- data.frame(Source=c("regression","Error","Total"), df=c(k, n-k-1, n-1), M
 print(df1)
 
 
-df2 <- data.frame(Parameter=c("Intercept(B_0)", "Clarity(B_1)", "Aroma(B_2)", "Body(B_3)", "Flavor(B_4)", "Oakiness(B_5)", "something", "ph", "something", "ror", "oidf", "pop"), Estimate=BetaHat, s.e.=sebeta, Tvalue = tval, pvalue = pvalT)
+df2 <- data.frame(Parameter=c("Intercept","house Age", "Distance to nearest MRT station", "Number of convenience stores", "Latitude"), Estimate=BetaHat, s.e.=sebeta, Tvalue = tval, pvalue = pvalT)
  
 print(df2)
 
@@ -140,58 +140,9 @@ print(COVRATIO_i)
 
 
 
-library(MASS)
-boxcox(lm(y~X))
-
-lambda <- 0.1212
-
-# 6. Refit the model
-
-
-ylambda <- (1/lambda)*(y^(lambda)-1)
-Xpylambda <- t(X)%*%ylambda
-
-BetaHatLambda<- invXpX%*%Xpylambda
-yhatlambda <- X%*%BetaHatLambda
-
-I <- diag(n)
-J <- const%*%t(const)
-H <- X%*%invXpX%*%t(X)
-
-hii <- diag(H)
-
-# Anova
-SST <- t(ylambda)%*%(I-J/n)%*%ylambda
-SSR <- t(ylambda)%*%(H-J/n)%*%ylambda
-SSE <- t(ylambda)%*%(I-H)%*%ylambda
-
-MSR <- SSR/k
-MSE <- SSE/(n-k-1)
-
-R2 <- SSR/SST
-R2A <- 1-(n-1)/(n-k-1)*(1-R2)
-
-S2 <- c(MSE)
-
-s <- sqrt(S2)
-
-e <- ylambda-yhatlambda
-e_std <- e/s
-e_stu <- e/(s*sqrt(1-hii))
-e_press <- e/(1-hii)
-
-# 7. plot the residual
-df4 <- data.frame(y_ihat=yhatlambda, Studentized_residuals = e_stu)
-
-plot(df4,pch = 20, cex=1.5, col='steelblue')
-
-
-#doesn't work
-
 
 #remove i = 329
 
-x1 <- c(file[1:35,2],file[37:nrow(file),2])
 x2 <- c(file[1:35,3],file[37:nrow(file),3])
 x3 <- c(file[1:35,4],file[37:nrow(file),4])
 x4 <- c(file[1:35,5],file[37:nrow(file),5])
@@ -202,7 +153,7 @@ y <- c( file[1:35,8],file[37:nrow(file),8])
 
  n <- length(y)
  const <- rep(1,n)
-X <- cbind(const,x1,x2,x3,x4,x5)
+X <- cbind(const,x2,x3,x4,x5)
 p <- dim(X)[2]
 k <- p-1
 XpX <- t(X)%*%X
@@ -288,7 +239,7 @@ y <- c( file[1:270,8],file[272:nrow(file),8])
 
  n <- length(y)
  const <- rep(1,n)
-X <- cbind(const,x1,x2,x3,x4,x5)
+X <- cbind(const,x2,x3,x4,x5)
 p <- dim(X)[2]
 k <- p-1
 XpX <- t(X)%*%X
@@ -343,7 +294,6 @@ plot(df8,pch = 20, cex=1.5, col='steelblue')
 
 # remove both
 
-x1 <- c(file[1:35,2],file[37:270,2],file[272:nrow(file),2])
 x2 <- c(file[1:35,3],file[37:270,3],file[272:nrow(file),3])
 x3 <- c(file[1:35,4],file[37:270,4],file[272:nrow(file),4])
 x4 <- c(file[1:35,5],file[37:270,5],file[272:nrow(file),5])
@@ -353,7 +303,7 @@ y <- c(file[1:35,8],file[37:270,8],file[272:nrow(file),8])
 
  n <- length(y)
  const <- rep(1,n)
-X <- cbind(const,x1,x2,x3,x4,x5)
+X <- cbind(const,x2,x3,x4,x5)
 p <- dim(X)[2]
 k <- p-1
 XpX <- t(X)%*%X
@@ -404,6 +354,56 @@ print(df9)
 df10 <- data.frame(y_ihat=yhat, Studentized_residuals = e_stu)
 
 plot(df10,pch = 20, cex=1.5, col='steelblue')
+
+
+library(MASS)
+boxcox(lm(y~X))
+
+lambda <- 0.25
+
+# 6. Refit the model
+
+
+ylambda <- (1/lambda)*(y^(lambda)-1)
+Xpylambda <- t(X)%*%ylambda
+
+BetaHatLambda<- invXpX%*%Xpylambda
+yhatlambda <- X%*%BetaHatLambda
+
+I <- diag(n)
+J <- const%*%t(const)
+H <- X%*%invXpX%*%t(X)
+
+hii <- diag(H)
+
+# Anova
+SST <- t(ylambda)%*%(I-J/n)%*%ylambda
+SSR <- t(ylambda)%*%(H-J/n)%*%ylambda
+SSE <- t(ylambda)%*%(I-H)%*%ylambda
+
+MSR <- SSR/k
+MSE <- SSE/(n-k-1)
+
+R2 <- SSR/SST
+R2A <- 1-(n-1)/(n-k-1)*(1-R2)
+
+S2 <- c(MSE)
+
+s <- sqrt(S2)
+
+e <- ylambda-yhatlambda
+e_std <- e/s
+e_stu <- e/(s*sqrt(1-hii))
+e_press <- e/(1-hii)
+
+# 7. plot the residual
+df4 <- data.frame(y_ihat=yhatlambda, Studentized_residuals = e_stu)
+
+plot(df4,pch = 20, cex=1.5, col='steelblue')
+
+
+#doesn't work
+
 
 
 
